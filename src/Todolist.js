@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 function TodoList() {
   const [todos, setTodos] = useState([]);
-
   const [inputValue, setInputValue] = useState('');
 
   const handleInputChange = (event) => {
@@ -14,19 +13,13 @@ function TodoList() {
     if (!inputValue.trim()) {
       return;
     }
-    setTodos([...todos, { text: inputValue, completed: false }]);
+    setTodos([...todos, inputValue]);
     setInputValue('');
   };
 
   const handleTodoDelete = (index) => {
     const newTodos = [...todos];
-    newTodos[index].completed = true;
-    setTodos(newTodos);
-  };
-
-  const handleCheckboxChange = (index) => {
-    const newTodos = [...todos];
-    newTodos[index].completed = !newTodos[index].completed;
+    newTodos.splice(index, 1);
     setTodos(newTodos);
   };
 
@@ -39,11 +32,8 @@ function TodoList() {
       </form>
       <ul>
         {todos.map((todo, index) => (
-          <li key={index} style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
-            <div>
-              <input type="checkbox" checked={todo.completed} onChange={() => handleCheckboxChange(index)} />
-            </div>
-            {todo.text}{' '}
+          <li key={index}>
+            {todo}{' '}
             <button onClick={() => handleTodoDelete(index)}>Delete</button>
           </li>
         ))}
@@ -53,4 +43,3 @@ function TodoList() {
 }
 
 export default TodoList;
-
